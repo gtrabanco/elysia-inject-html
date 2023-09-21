@@ -1,19 +1,16 @@
-import Elysia, { Context } from "elysia";
-import { getPackageNameAndVersion } from "./plugin-name" assert {
-	type: "macro",
-};
+import Elysia, { type Context } from "elysia";
+import { getPackageName } from "./plugin-name" assert { type: "macro" };
 
-const { name, version } = await getPackageNameAndVersion();
+const name = await getPackageName();
 
-type ElysiaInjectCodeConfig = {
+export type InjectCodeConfig = {
 	selector: string;
 	code: string | string[];
 };
 
-export const InjectCode = (config: ElysiaInjectCodeConfig) =>
-	new Elysia({ name, seed: config })
-		.decorate("version", version)
-		.onAfterHandle(({ response }) => {
+export const injectCode = (config: InjectCodeConfig) =>
+	new Elysia({ name, seed: config, scoped: true }).onAfterHandle(
+		({ response }) => {
 			const { headers } = response as Response;
 			const contentType = headers?.get("content-type") ?? "";
 
@@ -30,4 +27,5 @@ export const InjectCode = (config: ElysiaInjectCodeConfig) =>
 			});
 
 			return rw.transform(response as Response);
-		});
+		},
+	);

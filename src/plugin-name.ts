@@ -1,5 +1,3 @@
-export async function getPackageNameAndVersion() {
-	const { name, version } = await import("../package.json");
-
-	return { name, version };
+export async function getPackageName() {
+	return (await import("../package.json")).name;
 }

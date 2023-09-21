@@ -15,7 +15,7 @@ import { Elysia } from 'elysia';
 import { InjectPlugin } from 'elysia-plugin-inject';
 
 const app = new Elysia()
-  .use(IjectPlugin({
+  .use(injectCode({
     selector: 'body'
     code: '<script>alert("Hello World!")</script>'
   }))
@@ -32,7 +32,7 @@ You can provide multiple code with the same selector by providing an array of st
 
 ```js
 const app = new Elysia()
-  .use(IjectPlugin({
+  .use(injectCode({
     selector: 'body'
     code: [
       '<script>alert("Hello World!")</script>',
