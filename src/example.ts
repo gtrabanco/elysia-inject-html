@@ -1,16 +1,26 @@
 import Elysia from "elysia";
-import { injectHtml } from ".";
+import { injectHtml } from "./index.ts";
 
-const plugin = injectHtml({
-	selector: "body",
-	code: /*html*/ `
+const plugin = injectHtml([
+	{
+		selector: "body",
+		prepend: /*html*/ `
     <h1>Hello!</h1>
 `,
-});
+		append: /*html*/ `
+		<h3>World!</h3>
+		<footer>Bye!</footer>
+`,
+	},
+	{
+		selector: "title",
+		setInnerContent: "Reemplazed window title",
+	},
+]);
 
 const app = new Elysia()
 	.use(plugin)
-	.get("/txt", () => "Plain text")
+	.get("/txt", () => "Plain text no rewrite")
 	.get(
 		"/",
 		() =>
