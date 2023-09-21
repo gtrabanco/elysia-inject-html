@@ -1,9 +1,25 @@
 {
   "name": "@gtrabanco/elysia-inject-html",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
+  "description": "Elysia plugin to inject HTML into the DOM",
+  "keywords": [
+    "elysia",
+    "elysiajs",
+    "plugin",
+    "html",
+    "inject",
+    "bun"
+  ],
   "module": "dist/index.js",
   "types": "src/index.ts",
   "type": "module",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE.md",
+    "package.json"
+  ],
   "scripts": {
     "build": "bun build --minify --target=bun --external=elysia --outdir=dist src/index.ts",
     "check": "bunx biome check --no-errors-on-unmatched src",
