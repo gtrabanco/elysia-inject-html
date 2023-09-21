@@ -2,6 +2,8 @@
   "name": "@gtrabanco/elysia-inject-html",
   "version": "1.0.0-alpha.2",
   "description": "Elysia plugin to inject HTML into the DOM",
+  "repository": "https://github.com/gtrabanco/elysia-inject-html",
+  "author": "Gabriel Trabanco <gtrabanco@users.noreply.github.com> (https://gabi.io)",
   "keywords": [
     "elysia",
     "elysiajs",
@@ -10,15 +12,13 @@
     "inject",
     "bun"
   ],
-  "module": "dist/index.js",
+  "main": "dist/index.js",
   "types": "src/index.ts",
   "type": "module",
   "files": [
-    "dist",
     "src",
     "README.md",
-    "LICENSE.md",
-    "package.json"
+    "LICENSE.md"
   ],
   "scripts": {
     "build": "bun build --minify --target=bun --external=elysia --outdir=dist src/index.ts",
