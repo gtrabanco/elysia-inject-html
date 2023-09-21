@@ -1,0 +1,28 @@
+{
+  "name": "@gtrabanco/elysia-inject-html",
+  "version": "1.0.0-alpha.1",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "check": "bunx biome check --no-errors-on-unmatched src __test__",
+    "lint": "bunx biome check --no-errors-on-unmatched --apply src __test__",
+    "fmt": "bunx biome format --no-errors-on-unmatched --write src __test__",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.2.2",
+    "bun-types": "latest",
+    "elysia": "latest",
+    "husky": "^8.0.0",
+    "lint-staged": "14.0.1"
+  },
+  "peerDependencies": {
+    "typescript": "latest",
+    "elysia": ">=0.7.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "bun lint"
+    ]
+  }
+}
