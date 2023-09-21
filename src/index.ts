@@ -1,4 +1,4 @@
-import Elysia, { type Context } from "elysia";
+import Elysia from "elysia";
 import { getPackageName } from "./plugin-name" assert { type: "macro" };
 
 const name = await getPackageName();
@@ -8,7 +8,7 @@ export type InjectCodeConfig = {
 	code: string | string[];
 };
 
-export const injectCode = (config: InjectCodeConfig) =>
+export const injectHtml = (config: InjectCodeConfig) =>
 	new Elysia({ name, seed: config, scoped: true }).onAfterHandle(
 		({ response }) => {
 			const { headers } = response as Response;

@@ -1,7 +1,7 @@
 import Elysia from "elysia";
-import { injectCode } from ".";
+import { injectHtml } from ".";
 
-const plugin = injectCode({
+const plugin = injectHtml({
 	selector: "body",
 	code: /*html*/ `
     <h1>Hello!</h1>
