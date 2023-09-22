@@ -18,6 +18,7 @@ const plugin = injectHtml([
 	},
 ]);
 
+// Supposely you should be able to create as many plugins you want to modify the response but it is not working yet
 const pluginTwo = injectHtml({
 	selector: "p",
 	setInnerContent: "This text was replace by the pluginTwo",
@@ -25,7 +26,7 @@ const pluginTwo = injectHtml({
 
 const app = new Elysia()
 	.use(plugin)
-	.use(pluginTwo)
+	// .use(pluginTwo) // This is currently not working, unless until Elysia 0.7.9
 	.get("/txt", () => "Plain text no rewrite")
 	.get(
 		"/",
