@@ -18,6 +18,11 @@ const plugin = injectHtml([
 	},
 ]);
 
+const pluginTwo = injectHtml({
+	selector: "p",
+	setInnerContent: "This text was replace by the pluginTwo",
+});
+
 const app = new Elysia()
 	.use(plugin)
 	.get("/txt", () => "Plain text no rewrite")
@@ -25,7 +30,7 @@ const app = new Elysia()
 		"/",
 		() =>
 			new Response(
-				"<!doctype html><html><head><title>Sample</title></head><body><h2>Response</h2></body></html>",
+				"<!doctype html><html><head><title>Sample</title></head><body><h2>Response</h2><p>This test should be replaced with another instance of the plugin</p></body></html>",
 				{
 					headers: {
 						"content-type": "text/html; charset=utf-8",
