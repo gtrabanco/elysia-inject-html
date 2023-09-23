@@ -1,6 +1,12 @@
 import Elysia from "elysia";
 import { getPackageName } from "./plugin-name" assert { type: "macro" };
 
+// I made this workaround because without this workaround only works for the first
+// added plugin.
+let handlers: Array<ConfigAppendPrepend | ConfigSetInnerContent> | undefined;
+if (typeof handlers === typeof undefined)
+	handlers = [] as Array<ConfigAppendPrepend | ConfigSetInnerContent>;
+
 const name = await getPackageName();
 
 type ConfigSetInnerContent = {
@@ -59,20 +65,38 @@ const handleInjection = (
 	});
 };
 
-export const injectHtml = (config: InjectCodeConfig) =>
-	new Elysia({ name, seed: config }).onAfterHandle(({ response }) => {
-		const { headers } = response as Response;
-		const contentType = headers?.get("content-type") ?? "";
-		if (!contentType.includes("html")) return; // Not rewrite if not html
+export const injectHtml = (config: InjectCodeConfig) => {
+	handlers ??= [];
+	if (!Array.isArray(config)) {
+		handlers.push(config);
+	} else {
+		config.forEach((c) => handlers?.push(c));
+	}
 
-		const rw = new HTMLRewriter();
-		const configs = Array.isArray(config) ? config : [config];
-		configs.forEach((c) => {
-			rw.on(c.selector, {
-				element(element) {
-					handleInjection(c, element);
+	return new Elysia({ name, seed: JSON.stringify(config) }).onAfterHandle(
+		({ response }) => {
+			const { headers } = response as Response;
+			const contentType = headers?.get("content-type") ?? "";
+			if (!contentType.includes("html")) return; // Not rewrite if not html
+
+			const rw = new HTMLRewriter();
+			// In the version that was not working I used a variable which has config as array if it is not
+			// const handlers = Array.isArray(config)? config : [config];
+			handlers?.forEach(
+				(
+					c: Exclude<
+						InjectCodeConfig,
+						Array<ConfigAppendPrepend | ConfigSetInnerContent>
+					>,
+				) => {
+					rw.on(c.selector, {
+						element(element) {
+							handleInjection(c, element);
+						},
+					});
 				},
-			});
-		});
-		return rw.transform(response as Response);
-	});
+			);
+			return rw.transform(response as Response);
+		},
+	);
+};
