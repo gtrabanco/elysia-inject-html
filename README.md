@@ -47,3 +47,7 @@ const app = new Elysia()
     }))
   .listen(8080);
 ```
+
+## Known limitations
+
+Currently it is not working if you create two similar plugins or two plugins that call `afterHandle` because it will fail. This is confirmed until Elysia 0.7.9.
