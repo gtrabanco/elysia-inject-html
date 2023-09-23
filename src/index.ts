@@ -74,8 +74,12 @@ export const injectHtml = (config: InjectCodeConfig) => {
 	}
 
 	return new Elysia({ name, seed: JSON.stringify(config) }).onAfterHandle(
-		({ response }) => {
-			const { headers } = response as Response;
+		// Next function should not be async function
+		async ({ response }) => {
+			// Woraround modification, commented line 81 should be the good one
+			const { headers, status, statusText } = response as Response;
+			// const { headers } = response as Response;
+
 			const contentType = headers?.get("content-type") ?? "";
 			if (!contentType.includes("html")) return; // Not rewrite if not html
 
@@ -96,7 +100,17 @@ export const injectHtml = (config: InjectCodeConfig) => {
 					});
 				},
 			);
-			return rw.transform(response as Response);
+
+			// Workaround, commented line 109 should be the good one
+			return rw.transform(
+				new Response(await (response as Response).text(), {
+					headers,
+					status,
+					statusText,
+				}),
+			);
+
+			// return rw.transform(response as Response);
 		},
 	);
 };
