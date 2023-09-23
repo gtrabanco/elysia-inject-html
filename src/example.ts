@@ -26,7 +26,7 @@ const pluginTwo = injectHtml({
 
 const app = new Elysia()
 	.use(plugin)
-	// .use(pluginTwo) // This is currently not working, unless until Elysia 0.7.9
+	.use(pluginTwo) // This is currently not working, unless until Elysia 0.7.9
 	.get("/txt", () => "Plain text no rewrite")
 	.get(
 		"/",
