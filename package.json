@@ -21,7 +21,7 @@
     "LICENSE.md"
   ],
   "scripts": {
-    "example": "bun run src/example.ts",
+    "example": "bun run --watch src/example.ts",
     "build": "bun build --minify --target=bun --external=elysia --outdir=dist src/index.ts",
     "check": "bunx biome check --no-errors-on-unmatched src",
     "lint": "bunx biome check --no-errors-on-unmatched --apply src",
